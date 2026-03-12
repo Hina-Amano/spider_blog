@@ -1,5 +1,5 @@
 ---
-title: git配置信息
+title: git 配置信息
 date: 2026-03-012 10:0:0
 permalink: /git/git_config
 categories:

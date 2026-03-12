@@ -1,5 +1,5 @@
 ---
-title: git优化
+title: git 优化
 date: 2026-03-012 10:0:0
 permalink: /git/git_optimize
 categories:
