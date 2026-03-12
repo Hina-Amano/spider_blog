@@ -8,6 +8,6 @@ const teekConfig = defineTeekConfig({});
 // VitePress 配置
 export default defineConfig({
     extends: teekConfig,
-    srcDir: "../docs_context",
+    srcDir: "../blog_context",
     // ...
 });
