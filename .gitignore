@@ -1,1 +1,2 @@
-/docs/.vitepress/cache/
+/blog/.vitepress/cache/
+/pnpm-lock.yaml
