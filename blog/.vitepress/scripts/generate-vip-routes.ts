@@ -25,8 +25,10 @@ const vipRoutes: string[] = []
 for (const file of walk(docsDir)) {
     const content = fs.readFileSync(file, 'utf-8')
     const { data } = matter(content)
+    console.log(data)
+    console.log(data.is_vip)
 
-    if (data.is_vip === true) {
+    if (data.is_vip) {
         // 把文件路径转成 URL 路径
         let route = file
             .replace(docsDir, '')
