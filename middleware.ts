@@ -1,14 +1,14 @@
 // middleware.ts（项目根目录）
 import { jwtVerify } from 'jose'
+import { next } from '@vercel/edge'
 
 export const config = {
     matcher: ['/((?!_vitepress|api|.*\\.(?:js|css|png|svg|ico|json)).*)'],
 }
-// 顶部全局变量
+
 const secret = process.env.JWT_SECRET
 if (!secret) throw new Error('JWT_SECRET is not set')
 const JWT_SECRET = new TextEncoder().encode(secret)
-
 const VIP_ROUTES_URL = '/vip-routes.json'
 let vipRoutesCache: string[] | null = null
 
@@ -35,7 +35,6 @@ async function isValidToken(token: string): Promise<boolean> {
 function parseCookie(cookieHeader: string, name: string): string | null {
     const match = cookieHeader.match(new RegExp(`(?:^|;\\s*)${name}=([^;]*)`))
     return match ? decodeURIComponent(match[1]!) : null
-
 }
 
 export default async function middleware(request: Request) {
@@ -48,16 +47,15 @@ export default async function middleware(request: Request) {
     )
 
     if (!isVipPage) {
-        return new Response(null, { status: 200 })
+        return next()  // ← 放行，继续返回静态文件
     }
 
     const token = parseCookie(request.headers.get('cookie') || '', 'vip_token')
-
     if (!token || !(await isValidToken(token))) {
         const loginUrl = new URL('/login', origin)
         loginUrl.searchParams.set('redirect', pathname)
         return Response.redirect(loginUrl.toString(), 302)
     }
 
-    return new Response(null, { status: 200 })
+    return next()  // ← 验证通过，放行
 }
