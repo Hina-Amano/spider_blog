@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "docs:dev": "vitepress dev blog",
-    "docs:build": "vitepress build blog",
+    "docs:build": "tsx ./blog/.vitepress/scripts/generate-vip-routes.ts && vitepress build blog",
     "docs:preview": "vitepress preview blog"
   },
   "keywords": [],
@@ -14,7 +14,11 @@
   "license": "ISC",
   "packageManager": "pnpm@10.27.0",
   "devDependencies": {
+    "@types/node": "^25.5.0",
+    "gray-matter": "^4.0.3",
+    "jose": "^6.2.1",
     "next": "^16.1.6",
+    "tsx": "^4.21.0",
     "typescript": "^5.9.3",
     "vitepress": "^1.6.4",
     "vitepress-theme-teek": "^1.5.5"
