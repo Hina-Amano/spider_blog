@@ -4,8 +4,11 @@ import { jwtVerify } from 'jose'
 export const config = {
     matcher: ['/((?!_vitepress|api|.*\\.(?:js|css|png|svg|ico|json)).*)'],
 }
+// 顶部全局变量
+const secret = process.env.JWT_SECRET
+if (!secret) throw new Error('JWT_SECRET is not set')
+const JWT_SECRET = new TextEncoder().encode(secret)
 
-const JWT_SECRET = new TextEncoder().encode(process.env.JWT_SECRET || 'your-secret')
 const VIP_ROUTES_URL = '/vip-routes.json'
 let vipRoutesCache: string[] | null = null
 
@@ -31,7 +34,8 @@ async function isValidToken(token: string): Promise<boolean> {
 
 function parseCookie(cookieHeader: string, name: string): string | null {
     const match = cookieHeader.match(new RegExp(`(?:^|;\\s*)${name}=([^;]*)`))
-    return match ? decodeURIComponent(match[1]) : null
+    return match ? decodeURIComponent(match[1]!) : null
+
 }
 
 export default async function middleware(request: Request) {
