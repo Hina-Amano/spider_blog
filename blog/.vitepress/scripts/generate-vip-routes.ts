@@ -41,6 +41,8 @@ for (const file of walk(docsDir)) {
             route = route + '.html'
         }
         vipRoutes.push(route)
+        // 加
+        vipRoutes.push(data.permalink)
     }
 }
 
